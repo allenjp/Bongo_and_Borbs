@@ -11,7 +11,7 @@ extends CharacterBody2D
 @onready var gila_animation_player = $"../DesertLevel/Gila/AnimationPlayer"
 @onready var gila_sprite = $"../DesertLevel/Gila/AnimatedSprite2D"
 
-const SPEED = 12000.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -370.0
 var max_health = 9
 var current_health = max_health
@@ -76,7 +76,7 @@ func _physics_process(delta):
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if can_move:
 		if direction:
-			velocity.x = direction * SPEED * delta
+			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 		
