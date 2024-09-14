@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxlrmtgn16lmw"]
+
+[ext_resource type="Texture2D" uid="uid://b5gdeqnbk5r7w" path="res://assets/tiles/Ground_Block_v2.png" id="1_7bslq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec8jl"]
+size = Vector2(8, 60)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iewph"]
+radius = 3.88913
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f6oo1"]
+radius = 4.12441
+height = 15.0742
+
+[node name="Cactus" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7bslq")
+region_enabled = true
+region_rect = Rect2(128, 0, 32, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ec8jl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(9, -7)
+rotation = 1.19651
+shape = SubResource("CapsuleShape2D_iewph")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 6)
+rotation = -1.02204
+shape = SubResource("CapsuleShape2D_f6oo1")

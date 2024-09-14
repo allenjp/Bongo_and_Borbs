@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlet32yv3rkb5"]
+
+[ext_resource type="Script" path="res://scripts/robin.gd" id="1_o6yr4"]
+[ext_resource type="Texture2D" uid="uid://djk51a05nwheg" path="res://assets/sprites/birds/birds.png" id="1_vcbu1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vavi3"]
+atlas = ExtResource("1_vcbu1")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ch1t2"]
+atlas = ExtResource("1_vcbu1")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_titpf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vavi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ch1t2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c7uie"]
+radius = 6.08276
+
+[node name="Robin" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_o6yr4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_titpf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c7uie")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-12, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(11, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

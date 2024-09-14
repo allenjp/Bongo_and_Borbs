@@ -1,0 +1,104 @@
+[gd_scene load_steps=12 format=3 uid="uid://bejl274ugow1o"]
+
+[ext_resource type="Script" path="res://scripts/bongo.gd" id="1_4o8nb"]
+[ext_resource type="Texture2D" uid="uid://fclb32wycix4" path="res://assets/sprites/characters/bongo.png" id="1_uc8ec"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_051ig"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4byqk"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpy3m"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fn0rw"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13ljm"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu51s"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8i3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_051ig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4byqk")
+}],
+"loop": true,
+"name": &"dig",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_cpy3m")
+}],
+"loop": false,
+"name": &"ouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fn0rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13ljm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xu51s")
+}],
+"loop": true,
+"name": &"walk_idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_003g7"]
+size = Vector2(28, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8kpt0"]
+radius = 5.0
+
+[node name="Bongo" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_4o8nb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_h8i3k")
+animation = &"walk_idle"
+autoplay = "walk_idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.999991, -11)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_003g7")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(9, -16)
+rotation = 0.0854098
+shape = SubResource("CircleShape2D_8kpt0")
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="DigTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
+[connection signal="timeout" from="DigTimer" to="." method="_on_dig_timer_timeout"]

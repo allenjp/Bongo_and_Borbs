@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://dlet32yv3rkb5"]
+
+[ext_resource type="Script" path="res://scripts/robin.gd" id="1_o6yr4"]
+[ext_resource type="Texture2D" uid="uid://djk51a05nwheg" path="res://assets/sprites/birds/birds.png" id="1_vcbu1"]
+[ext_resource type="AudioStream" uid="uid://e6acwnxc6dl0" path="res://assets/audio/robin.wav" id="3_jxwif"]
+[ext_resource type="Script" path="res://scripts/OuterAreaRobin.gd" id="4_t56ew"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vavi3"]
+atlas = ExtResource("1_vcbu1")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ch1t2"]
+atlas = ExtResource("1_vcbu1")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_titpf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vavi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ch1t2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c7uie"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fasot"]
+radius = 116.017
+
+[node name="Robin" type="Area2D"]
+z_index = 3
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_o6yr4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_titpf")
+autoplay = "default"
+frame_progress = 0.63829
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c7uie")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-14, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(14, 0)
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 7)
+collision_mask = 9
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jxwif")
+volume_db = 4.245
+
+[node name="OuterArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_t56ew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OuterArea"]
+shape = SubResource("CircleShape2D_fasot")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="OuterArea" to="." method="_on_outer_area_area_entered"]
+[connection signal="area_entered" from="OuterArea" to="OuterArea" method="_on_area_entered"]
+[connection signal="body_entered" from="OuterArea" to="OuterArea" method="_on_body_entered"]
+[connection signal="body_exited" from="OuterArea" to="OuterArea" method="_on_body_exited"]

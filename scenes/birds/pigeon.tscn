@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://ijmogxk03d2"]
+
+[ext_resource type="Script" path="res://scripts/pigeon.gd" id="1_3474p"]
+[ext_resource type="Texture2D" uid="uid://djk51a05nwheg" path="res://assets/sprites/birds/birds.png" id="2_03cts"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfb5j"]
+radius = 68.0294
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7byo"]
+atlas = ExtResource("2_03cts")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_631de"]
+atlas = ExtResource("2_03cts")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_20yj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7byo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_631de")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0qg7"]
+size = Vector2(17, 16)
+
+[node name="Pigeon" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_3474p")
+
+[node name="OuterArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OuterArea"]
+shape = SubResource("CircleShape2D_bfb5j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_20yj3")
+autoplay = "default"
+flip_h = true
+
+[node name="CollisionObject" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_m0qg7")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 7)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(9, 0)
+collision_mask = 9
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-8, 0)
+collision_mask = 9
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="OuterArea" to="." method="_on_outer_area_body_entered"]
+[connection signal="body_entered" from="OuterArea" to="OuterArea" method="_on_body_entered"]
+[connection signal="body_exited" from="OuterArea" to="OuterArea" method="_on_body_exited"]

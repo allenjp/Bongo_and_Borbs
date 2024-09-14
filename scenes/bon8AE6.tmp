@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://bejl274ugow1o"]
+
+[ext_resource type="Script" path="res://scripts/bongo.gd" id="1_4o8nb"]
+[ext_resource type="Texture2D" uid="uid://fclb32wycix4" path="res://assets/sprites/characters/bongo.png" id="1_uc8ec"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eigg"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8o4v"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bonme"]
+atlas = ExtResource("1_uc8ec")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8i3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eigg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8o4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bonme")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_003g7"]
+size = Vector2(23, 12.1511)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8kpt0"]
+radius = 5.0
+
+[node name="Bongo" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_4o8nb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_h8i3k")
+autoplay = "default"
+frame_progress = 0.240248
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.49998, -6.92446)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_003g7")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(9, -16)
+rotation = 0.0854098
+shape = SubResource("CircleShape2D_8kpt0")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
