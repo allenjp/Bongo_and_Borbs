@@ -99,6 +99,6 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[connection signal="timeout" from="MoveTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="DigTimer" to="." method="_on_dig_timer_timeout"]
